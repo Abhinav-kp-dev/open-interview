@@ -1,8 +1,8 @@
 <div align="center">
 
-# ⚡ Open Interview Coder
+# Open Interview Coder
 
-**The Ultimate Open-Source, Stealth Desktop AI Copilot for Technical Coding Assessments & Interviews**
+**An Open-Source, Stealth Desktop AI Copilot for Technical Coding Assessments and Interviews**
 
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-brightgreen.svg)](#cross-platform-support)
@@ -13,87 +13,88 @@
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Abhinav--kp--dev%2Fopen--interview-black?logo=github)](https://github.com/Abhinav-kp-dev/open-interview)
 
 <p align="center">
-  <a href="#-key-features">Key Features</a> •
-  <a href="#-supported-ai-providers">AI Models & Providers</a> •
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-global-keyboard-shortcuts">Hotkeys</a> •
-  <a href="#-architecture--workflow">Architecture</a> •
-  <a href="#-configuration">Configuration</a> •
-  <a href="#-building--packaging">Packaging</a>
+  <a href="#overview">Overview</a> •
+  <a href="#core-capabilities">Core Capabilities</a> •
+  <a href="#supported-ai-providers">AI Models & Providers</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#keyboard-shortcuts">Keyboard Shortcuts</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#configuration">Configuration</a> •
+  <a href="#packaging">Packaging</a>
 </p>
 
 </div>
 
 ---
 
-## 📖 Overview
+## Overview
 
-**Open Interview Coder** is an unobtrusive, lightweight desktop application engineered to assist developers during algorithmic coding interviews, live technical problem solving, and online assessments (LeetCode, HackerRank, CodeSignal, etc.). 
+Open Interview Coder is an unobtrusive desktop application engineered to assist developers during algorithmic coding interviews, live technical problem solving, and online assessments (LeetCode, HackerRank, CodeSignal, and similar platforms).
 
-Running as an ultra-low-profile, always-on-top transparent overlay, the application allows you to capture problems straight from your screen using global hotkeys, parses the problem statement, inputs, and constraints using advanced Multimodal Vision AI, and renders optimal code solutions, algorithmic explanations, time/space complexities, and debugging suggestions—**completely hands-free without ever losing focus from your editor or browser**.
+Running as an ultra-low-profile, always-on-top transparent overlay, the application allows you to capture problems directly from your screen using global hotkeys. It parses the problem statement, inputs, and constraints using Multimodal Vision AI, and renders optimal code solutions, algorithmic explanations, time/space complexities, and debugging suggestions without shifting focus away from your active IDE or browser session.
 
 ---
 
-## 🚀 Key Features
+## Core Capabilities
 
-- 🥷 **Full Stealth Overlay Mode**
-  - Instant visibility toggle with `Cmd/Ctrl + B`.
-  - Dynamic opacity adjustment (`Cmd/Ctrl + [` and `]`) from 10% translucent to 100% opaque.
-  - Transparent click-through and non-activating window flags so screen recorders and assessment anti-cheat software do not capture focus changes.
-- 📸 **One-Click Vision Problem Extraction**
+- **Stealth Overlay Interface**
+  - Instant visibility toggle using `Cmd/Ctrl + B`.
+  - Continuous opacity adjustments (`Cmd/Ctrl + [` and `]`) from 10% translucent to 100% opaque.
+  - Transparent click-through and non-activating window flags designed to minimize interference with active desktop workflows.
+- **Automated Vision Problem Extraction**
   - Instant background screenshot capture with `Cmd/Ctrl + H`.
-  - AI Vision extracts problem descriptions, examples, constraints, and edge cases with zero manual copy-pasting.
-- 🧠 **Multi-Provider AI Engine**
-  - **Google Gemini**: Tested and optimized for free-tier Google AI Studio keys (`gemini-2.5-flash`, `gemini-3.1-flash-lite`).
-  - **Ollama (100% Offline & Free)**: Zero API cost, private local model execution (`llama3.2-vision`, `qwen2.5-coder`).
-  - **OpenAI**: State-of-the-art reasoning models (`gpt-4o`, `gpt-4o-mini`, `o1`, `o3-mini`).
-  - **Anthropic Claude**: Premier coding capabilities (`claude-3-7-sonnet`, `claude-3-5-sonnet`).
-- ⚡ **Zero Subscriptions & Zero Paywalls**
-  - Fully open-source with 100% unlocked functionality.
+  - Multimodal Vision parsing extracts problem statements, examples, constraints, and edge cases with zero manual copy-pasting.
+- **Multi-Provider AI Engine**
+  - **Google Gemini**: Optimized for active free-tier Google AI Studio models (`gemini-2.5-flash`, `gemini-3.1-flash-lite`).
+  - **Ollama (Local & Offline)**: Zero API cost, private local model execution (`llama3.2-vision`, `qwen2.5-coder`).
+  - **OpenAI**: Frontier reasoning models (`gpt-4o`, `gpt-4o-mini`, `o1`, `o3-mini`).
+  - **Anthropic Claude**: Leading code generation models (`claude-3-7-sonnet`, `claude-3-5-sonnet`).
+- **Zero Subscriptions & Zero Paywalls**
+  - Fully open-source with unlocked functionality.
   - Bring your own API key or run completely local and offline via Ollama.
-- 💻 **Multi-Language Generation**
+- **Multi-Language Generation**
   - Optimized solutions in Python, C++, Java, JavaScript, TypeScript, Go, Rust, and C#.
   - Clean syntax highlighting, algorithmic intuition, step-by-step breakdown, and Big-O complexity analysis.
-- ⌨️ **Comprehensive Global Keyboard Controls**
+- **Global Keyboard Control**
   - Reposition the overlay (`Cmd/Ctrl + Arrows`), scroll without focusing (`Alt + Up/Down`), adjust zoom, and clear queues entirely via shortcuts.
 
 ---
 
-## 🤖 Supported AI Providers
+## Supported AI Providers
 
 Open Interview Coder separates problem processing into three distinct model pipelines: **Extraction (Vision)**, **Solution Generation (Reasoning)**, and **Debugging (Code Review)**.
 
 | Provider | Recommended Models | Vision Support | Cost | Privacy |
 | :--- | :--- | :---: | :---: | :---: |
-| **Google Gemini** | `gemini-2.5-flash`<br>`gemini-3.1-flash-lite` | ✅ Yes | **Free Tier Available** | Cloud |
-| **Ollama (Local)** | `llama3.2-vision:11b`<br>`qwen2.5-coder:7b` | ✅ Yes | **100% Free** | **100% Offline / Local** |
-| **OpenAI** | `gpt-4o`<br>`gpt-4o-mini`<br>`o3-mini` | ✅ Yes | Paid API | Cloud |
-| **Anthropic Claude** | `claude-3-7-sonnet`<br>`claude-3-5-sonnet` | ✅ Yes | Paid API | Cloud |
+| **Google Gemini** | `gemini-2.5-flash`<br>`gemini-3.1-flash-lite` | Supported | Free Tier Available | Cloud |
+| **Ollama (Local)** | `llama3.2-vision:11b`<br>`qwen2.5-coder:7b` | Supported | 100% Free | 100% Offline / Local |
+| **OpenAI** | `gpt-4o`<br>`gpt-4o-mini`<br>`o3-mini` | Supported | Paid API | Cloud |
+| **Anthropic Claude** | `claude-3-7-sonnet`<br>`claude-3-5-sonnet` | Supported | Paid API | Cloud |
 
 ---
 
-## ⌨️ Global Keyboard Shortcuts
+## Keyboard Shortcuts
 
 Control the entire application without clicking out of your IDE or active window:
 
 | Shortcut | Function | Description |
 | :--- | :--- | :--- |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>B</kbd> | **Toggle Visibility** | Instantly hides or reveals the overlay window |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>H</kbd> | **Capture Screen** | Takes a screenshot of your active display and queues it |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>Enter</kbd> | **Solve Problem** | Submits captured screenshots and prompts to the AI engine |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>.</kbd> | **Cancel Request** | Aborts in-flight AI requests immediately |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>[</kbd> / <kbd>]</kbd> | **Adjust Opacity** | Cycles window transparency (translucent ↔ opaque) |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> / <kbd>→</kbd> | **Move Window** | Repositions the overlay across your desktop |
-| <kbd>Alt</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd> | **Silent Scroll** | Scrolls the solution pane without taking keyboard focus |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>R</kbd> | **Reset View** | Clears active queue and returns to the initial capture screen |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>/</kbd> | **Focus Input** | Focuses the custom prompt / instructions text input |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> | **Clear Screenshots** | Clears all pending screenshots from the queue |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>-</kbd> / <kbd>0</kbd> / <kbd>=</kbd> | **Zoom Control** | Zoom out, reset zoom (100%), or zoom in |
-| <kbd>Cmd/Ctrl</kbd> + <kbd>Q</kbd> | **Quit App** | Closes and terminates the background Electron process |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>B</kbd> | Toggle Visibility | Instantly hides or reveals the overlay window |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>H</kbd> | Capture Screen | Takes a screenshot of your active display and queues it |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>Enter</kbd> | Solve Problem | Submits captured screenshots and prompts to the AI engine |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>.</kbd> | Cancel Request | Aborts in-flight AI requests immediately |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>[</kbd> / <kbd>]</kbd> | Adjust Opacity | Cycles window transparency (translucent to opaque) |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> / <kbd>→</kbd> | Move Window | Repositions the overlay across your desktop |
+| <kbd>Alt</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd> | Silent Scroll | Scrolls the solution pane without taking keyboard focus |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>R</kbd> | Reset View | Clears active queue and returns to the initial capture screen |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>/</kbd> | Focus Input | Focuses the custom prompt / instructions text input |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> | Clear Screenshots | Clears all pending screenshots from the queue |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>-</kbd> / <kbd>0</kbd> / <kbd>=</kbd> | Zoom Control | Zoom out, reset zoom (100%), or zoom in |
+| <kbd>Cmd/Ctrl</kbd> + <kbd>Q</kbd> | Quit Application | Closes and terminates the background Electron process |
 
 ---
 
-## 🛠️ Architecture & Workflow
+## Architecture
 
 ### High-Level Architecture
 
@@ -168,7 +169,7 @@ sequenceDiagram
 
 ---
 
-## 📦 Quick Start & Installation
+## Quick Start
 
 ### Prerequisites
 - **Node.js**: `v18.x` or `v20.x` (LTS recommended)
@@ -194,8 +195,8 @@ npm install
 You can configure your provider inside the GUI (Gear icon in the top header) or edit your local config directly:
 
 #### Option A: Google Gemini (Free Tier Recommended)
-1. Get a free API key at [Google AI Studio](https://aistudio.google.com/).
-2. In Settings, select **Gemini** and paste your key.
+1. Generate an API key at [Google AI Studio](https://aistudio.google.com/).
+2. In Settings, select **Gemini** and enter your key.
 3. The app is pre-configured to use **`gemini-2.5-flash`** for both Vision extraction and code generation.
 
 #### Option B: Ollama (Local & Free)
@@ -204,9 +205,9 @@ You can configure your provider inside the GUI (Gear icon in the top header) or 
 
 #### Option C: OpenAI or Anthropic
 1. In Settings, select **OpenAI** or **Anthropic**.
-2. Paste your API key and choose your preferred model tier (`gpt-4o`, `claude-3-7-sonnet`, etc.).
+2. Enter your API key and choose your preferred model tier (`gpt-4o`, `claude-3-7-sonnet`, etc.).
 
-### 3. Launching the App
+### 3. Running the Application
 
 #### Development Mode (with Live Reload / HMR)
 ```bash
@@ -219,7 +220,7 @@ npm run build
 npm run run-prod
 ```
 
-#### Stealth One-Click Launchers
+#### Stealth Startup Scripts
 - **macOS / Linux**:
   ```bash
   chmod +x stealth-run.sh
@@ -232,7 +233,7 @@ npm run run-prod
 
 ---
 
-## ⚙️ Configuration & Storage
+## Configuration & Storage
 
 User preferences, API keys, and selected models are stored securely in local configuration files:
 
@@ -259,7 +260,7 @@ User preferences, API keys, and selected models are stored securely in local con
 
 ---
 
-## 🛠️ Project Structure
+## Project Structure
 
 ```
 open-interview/
@@ -292,7 +293,7 @@ open-interview/
 
 ---
 
-## 🏗️ Building & Packaging
+## Building & Packaging
 
 To compile standalone desktop executables and installers:
 
@@ -311,17 +312,17 @@ Installers and distribution binaries will be located in the `release/` directory
 
 ---
 
-## 🛡️ Privacy & Security Best Practices
+## Privacy & Security
 
-1. **Local Model Privacy**: When using Ollama, no screen captures, code snippets, or prompts ever leave your machine.
-2. **Never Commit Secrets**: The project's `.gitignore` automatically blocks `.env`, local `config.json` secrets, and build output directories.
-3. **Ephemeral Storage**: Screenshots captured during a session are stored only temporarily in your local OS temp folder and are automatically cleared.
+1. **Local Model Privacy**: When using Ollama, no screen captures, code snippets, or prompts leave your machine.
+2. **Ignored Secrets**: The repository `.gitignore` blocks `.env`, local `config.json` secrets, and build output directories.
+3. **Ephemeral Storage**: Screenshots captured during a session are stored only temporarily in your local OS temporary directory and are cleared automatically.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions, bug reports, and feature requests are welcome!
+Contributions, bug reports, and feature requests are welcome.
 
 1. Fork the repository: [https://github.com/Abhinav-kp-dev/open-interview](https://github.com/Abhinav-kp-dev/open-interview)
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -331,7 +332,7 @@ Contributions, bug reports, and feature requests are welcome!
 
 ---
 
-## ⚖️ License & Disclaimer
+## License & Disclaimer
 
 This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See the [LICENSE](LICENSE) file for details.
 
