@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --app-ui-opacity: 1;
+  --app-bg: transparent;
+  --app-bg-soft: rgba(12, 24, 42, 0.34);
+  --app-panel: rgba(8, 15, 28, 0.38);
+  --app-panel-strong: rgba(7, 13, 24, 0.52);
+  --app-border: rgba(218, 238, 255, 0.2);
+  --app-border-strong: rgba(218, 238, 255, 0.34);
+  --app-text: #f4f7fb;
+  --app-text-muted: rgba(228, 236, 248, 0.7);
+  --app-accent: #6dd3ff;
+  --app-accent-strong: #88f0ff;
+  --app-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  min-height: 100%;
+  background: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI Variable Display", "Segoe UI", "SF Pro Display",
+    "Helvetica Neue", sans-serif;
+  color: var(--app-text);
+  background: transparent;
+  background-attachment: fixed;
+}
+
+.app-opacity-shell {
+  opacity: var(--app-ui-opacity);
+  transition: opacity 140ms ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Default cursor for base layout elements */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: transparent;
+  color: inherit;
+}
+
+::-moz-selection {
+  background: transparent;
+  color: inherit;
+}
+
+*:focus,
+*:focus-visible,
+*:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  border-color: inherit !important;
+}
+
+button,
+a,
+select,
+summary,
+[role="button"],
+[role="combobox"] {
+  cursor: pointer !important;
+}
+
+input,
+textarea {
+  cursor: text !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: inherit;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  transition: background-color 0s, color 0s;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background: rgba(173, 216, 255, 0.22);
+  background-clip: padding-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* Custom animations for UI elements */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -48%); }
+  to { opacity: 0.98; transform: translate(-50%, -50%); }
+}
+
+/* Dialog transition improvements */
+.settings-dialog {
+  transform-origin: center;
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+}
+
+/* Custom styling for dropdowns */
+select {
+  appearance: menulist;
+  background-color: rgba(8, 15, 28, 0.92) !important;
+  color: white !important;
+}
+
+option {
+  background-color: #0d1524 !important;
+  color: white !important;
+  padding: 8px !important;
+}
+
+.frosted-glass {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.auth-button {
+  background: rgba(252, 252, 252, 0.98);
+  color: rgba(60, 60, 60, 0.9);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.auth-button:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.auth-button::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  background: linear-gradient(45deg, #ff000000, #0000ff00);
+  z-index: -1;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: inherit;
+  filter: blur(24px);
+  opacity: 0;
+}
+
+.auth-button:hover::before {
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 0.4),
+    rgba(0, 0, 255, 0.4)
+  );
+  filter: blur(48px);
+  inset: -16px;
+  opacity: 1;
+}
+
+.app-shell {
+  position: relative;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  padding: 24px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  background: transparent;
+}
+
+.app-shell-fit {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.app-shell::before,
+.app-shell::after {
+  content: none;
+  position: fixed;
+  inset: auto;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 999px;
+  filter: blur(48px);
+}
+
+.app-shell::before {
+  top: -120px;
+  right: -80px;
+  width: 280px;
+  height: 280px;
+  background: rgba(109, 211, 255, 0.14);
+}
+
+.app-shell::after {
+  bottom: -100px;
+  left: -40px;
+  width: 240px;
+  height: 240px;
+  background: rgba(135, 153, 255, 0.12);
+}
+
+.app-surface {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+
+.app-panel {
+  border: 1px solid var(--app-border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02)),
+    var(--app-panel);
+  box-shadow: var(--app-shadow);
+  backdrop-filter: blur(26px) saturate(1.35);
+  -webkit-backdrop-filter: blur(26px) saturate(1.35);
+}
+
+.app-section-title {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.app-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.75rem;
+  width: 100%;
+  border: 1px solid var(--app-border);
+  background: rgba(7, 13, 24, 0.44);
+  backdrop-filter: blur(24px) saturate(1.35);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  border-radius: 1.25rem;
+  padding: 0.85rem;
+  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.3);
+}
+
+.app-tool-button {
+  display: flex;
+  min-height: 56px;
+  min-width: 0;
+  flex: 1 1 180px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.85rem 1rem;
+  color: var(--app-text);
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.app-tool-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--app-border-strong);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.app-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 0.55rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.app-content-card {
+  border-radius: 1.5rem;
+  border: 1px solid var(--app-border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent),
+    rgba(6, 12, 22, 0.46);
+  padding: 1.1rem;
+  box-shadow: var(--app-shadow);
+  backdrop-filter: blur(28px) saturate(1.35);
+  -webkit-backdrop-filter: blur(28px) saturate(1.35);
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .app-tool-button {
+    flex-basis: 100%;
+  }
+}

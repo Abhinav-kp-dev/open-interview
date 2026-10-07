@@ -1,0 +1,10 @@
+{
+  "apiKey": "",
+  "apiProvider": "ollama",
+  "extractionModel": "llama3.2-vision:11b",
+  "solutionModel": "qwen2.5-coder:7b",
+  "debuggingModel": "llama3.2-vision:11b",
+  "ollamaHost": "http://localhost:11434",
+  "language": "python",
+  "opacity": 1
+}
