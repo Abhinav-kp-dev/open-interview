@@ -246,6 +246,9 @@ export function SettingsDialog({
   const { showToast } = useToast()
 
   const handleOpenChange = (newOpen: boolean) => {
+    try {
+      window.electronAPI?.setWindowFocusable?.(newOpen)
+    } catch (_) {}
     if (onOpenChange) {
       onOpenChange(newOpen)
     }

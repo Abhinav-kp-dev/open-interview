@@ -140,6 +140,7 @@ export interface ElectronAPI {
   onDebugError: (callback: (error: string) => void) => () => void
   openExternal: (url: string) => void
   focusMainWindow: () => Promise<{ success: boolean; error?: string }>
+  setWindowFocusable: (focusable: boolean) => Promise<{ success: boolean; error?: string }>
   toggleMainWindow: () => Promise<{ success: boolean; error?: string }>
   triggerScreenshot: () => Promise<{ success: boolean; error?: string }>
   triggerProcessScreenshots: (payload?: { userText?: string; mode?: "solve" | "debug" }) => Promise<{ success: boolean; error?: string }>

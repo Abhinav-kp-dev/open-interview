@@ -51,6 +51,8 @@ const electronAPI = {
     }
   },
   focusMainWindow: () => ipcRenderer.invoke("focus-window"),
+  setWindowFocusable: (focusable: boolean) =>
+    ipcRenderer.invoke("set-window-focusable", focusable),
   // Event listeners
   onScreenshotTaken: (
     callback: (data: { path: string; preview: string }) => void

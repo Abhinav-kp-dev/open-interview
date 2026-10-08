@@ -809,6 +809,16 @@ const Solutions: React.FC<SolutionsProps> = ({
                         <textarea
                           value={followUpText}
                           onChange={(e) => setFollowUpText(e.target.value)}
+                          onFocus={() => {
+                            try {
+                              window.electronAPI?.setWindowFocusable?.(true)
+                            } catch (_) {}
+                          }}
+                          onBlur={() => {
+                            try {
+                              window.electronAPI?.setWindowFocusable?.(false)
+                            } catch (_) {}
+                          }}
                           placeholder="Type a follow-up question, ask for solution revisions, or add new context here..."
                           className="min-h-[120px] w-full resize-y rounded-[1.25rem] border border-white/10 bg-black/35 px-4 py-4 text-sm leading-7 text-white outline-none transition placeholder:text-white/30 focus:border-cyan-200/30"
                         />

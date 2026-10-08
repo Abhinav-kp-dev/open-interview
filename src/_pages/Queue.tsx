@@ -139,6 +139,9 @@ const Queue: React.FC<QueueProps> = ({
   }
 
   const handleFocusPromptInput = () => {
+    try {
+      window.electronAPI?.setWindowFocusable?.(true)
+    } catch (_) {}
     const promptInput = promptInputRef.current
     if (!promptInput) return
 
@@ -231,6 +234,10 @@ const Queue: React.FC<QueueProps> = ({
       console.error("Failed to persist prompt before processing:", error)
     })
 
+    try {
+      window.electronAPI?.setWindowFocusable?.(false)
+    } catch (_) {}
+
     const result = await window.electronAPI.triggerProcessScreenshots({
       userText: trimmedPrompt
     })
@@ -317,6 +324,16 @@ const Queue: React.FC<QueueProps> = ({
                   ref={promptInputRef}
                   value={promptText}
                   onChange={(e) => setPromptText(e.target.value)}
+                  onFocus={() => {
+                    try {
+                      window.electronAPI?.setWindowFocusable?.(true)
+                    } catch (_) {}
+                  }}
+                  onBlur={() => {
+                    try {
+                      window.electronAPI?.setWindowFocusable?.(false)
+                    } catch (_) {}
+                  }}
                   placeholder="Paste problem statement, constraints, examples, or your questions here..."
                   className="min-h-[140px] w-full resize-y rounded-[1.25rem] border border-white/15 bg-black/20 px-4 py-4 text-sm leading-7 text-white outline-none backdrop-blur-xl transition placeholder:text-white/35 focus:border-cyan-200/30"
                 />

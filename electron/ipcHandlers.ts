@@ -230,6 +230,9 @@ export function initializeIpcHandlers(deps: IIpcHandlerDeps): void {
   ipcMain.handle("open-settings-portal", () => {
     const mainWindow = deps.getMainWindow();
     if (mainWindow) {
+      try {
+        mainWindow.setFocusable(true);
+      } catch (_) {}
       mainWindow.webContents.send("show-settings-dialog");
       return { success: true };
     }
@@ -238,6 +241,24 @@ export function initializeIpcHandlers(deps: IIpcHandlerDeps): void {
 
 
   // Window management handlers
+  ipcMain.handle("set-window-focusable", (_event, focusable: boolean) => {
+    try {
+      if (deps.setWindowFocusable) {
+        deps.setWindowFocusable(focusable);
+      } else {
+        const win = deps.getMainWindow();
+        if (win && !win.isDestroyed()) {
+          win.setFocusable(Boolean(focusable));
+          if (!focusable) win.blur();
+        }
+      }
+      return { success: true };
+    } catch (error) {
+      console.error("Error setting window focusable:", error);
+      return { error: "Failed to set focusable state" };
+    }
+  })
+
   ipcMain.handle("focus-window", () => {
     try {
       deps.focusMainWindow()

@@ -60,7 +60,10 @@ export class ShortcutsHelper {
 
     this.registerShortcut("CommandOrControl+Enter", async () => {
       const mainWindow = this.deps.getMainWindow()
-      if (mainWindow) {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        try {
+          mainWindow.setFocusable(false)
+        } catch (_) {}
         mainWindow.webContents.send("process-current-input")
       }
     })
@@ -110,6 +113,9 @@ export class ShortcutsHelper {
       // Notify renderer process to switch view to 'queue'
       const mainWindow = this.deps.getMainWindow()
       if (mainWindow && !mainWindow.isDestroyed()) {
+        try {
+          mainWindow.setFocusable(false)
+        } catch (_) {}
         mainWindow.webContents.send("reset-view")
         mainWindow.webContents.send("reset")
       }

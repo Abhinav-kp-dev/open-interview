@@ -21,6 +21,11 @@ const MIN_WINDOW_OPACITY = 0.1
 const MAX_WINDOW_OPACITY = 1
 const WINDOW_OPACITY_STEP = 0.1
 
+// Hide Dock on macOS so application acts as an accessory overlay without stealing app focus
+if (process.platform === "darwin" && app.dock) {
+  app.dock.hide()
+}
+
 if (shouldDisableGpu) {
   app.disableHardwareAcceleration()
   app.commandLine.appendSwitch("disable-gpu")
@@ -144,6 +149,7 @@ export interface IShortcutsHelperDeps {
 export interface IIpcHandlerDeps {
   getMainWindow: () => BrowserWindow | null
   setWindowDimensions: (width: number, height: number) => void
+  setWindowFocusable?: (focusable: boolean) => void
   getScreenshotQueue: () => string[]
   getExtraScreenshotQueue: () => string[]
   deleteScreenshot: (
@@ -388,7 +394,7 @@ async function createWindow(): Promise<void> {
 
   if (state.mainWindow) {
     if (state.mainWindow.isMinimized()) state.mainWindow.restore()
-    state.mainWindow.focus()
+    state.mainWindow.showInactive()
     return
   }
 
@@ -428,12 +434,11 @@ async function createWindow(): Promise<void> {
     frame: false,
     transparent: useTransparentWindow,
     fullscreenable: false,
-    hasShadow: !isWindows,
+    hasShadow: false,
     opacity: 1.0,  // Start with full opacity
     backgroundColor: useTransparentWindow ? "#00000000" : "#091120",
-    focusable: true,
-    skipTaskbar: !isWindows,
-    ...(isWindows ? {} : { type: "panel" as const }),
+    focusable: false, // Default to non-focusable: clicking overlay will never steal OS focus from browser
+    skipTaskbar: true,
     paintWhenInitiallyHidden: true,
     titleBarStyle: "hidden",
     enableLargerThanScreen: true,
@@ -447,9 +452,6 @@ async function createWindow(): Promise<void> {
   state.mainWindow.once("ready-to-show", () => {
     if (!state.mainWindow?.isDestroyed()) {
       showMainWindow()
-      if (isWindows) {
-        state.mainWindow.focus()
-      }
     }
   })
 
@@ -458,9 +460,6 @@ async function createWindow(): Promise<void> {
     console.log("Window finished loading")
     if (!state.mainWindow?.isDestroyed() && !state.isWindowVisible) {
       showMainWindow()
-      if (isWindows) {
-        state.mainWindow.focus()
-      }
     }
   })
   state.mainWindow.webContents.on(
@@ -652,8 +651,6 @@ function adjustWindowOpacity(delta: number): number | null {
 
   if (!state.isWindowVisible) {
     showMainWindow()
-  } else {
-    mainWindow.focus()
   }
 
   return nextOpacity
@@ -667,6 +664,9 @@ function hideMainWindow(): void {
     state.windowSize = { width: bounds.width, height: bounds.height }
     state.mainWindow.setOpacity(0)
     state.isWindowVisible = false
+    try {
+      state.mainWindow.setFocusable(false)
+    } catch (_) {}
     syncWindowStealthState(state.mainWindow)
     console.log("Window hidden, opacity set to 0")
   }
@@ -723,12 +723,12 @@ function showMainWindow(): void {
     }
     applyWindowOpacity(getStoredWindowOpacity(), { persist: false })
     syncWindowTaskbarState(state.mainWindow)
-    state.mainWindow.show()
-    state.mainWindow.focus()
+    // Non-activating stealth show: never steal OS focus from the active browser or interview window
+    state.mainWindow.showInactive()
     state.mainWindow.moveTop()
     state.isWindowVisible = true
     syncWindowStealthState(state.mainWindow)
-    console.log("Window shown and brought back into the visible work area")
+    console.log("Window shown inactive (stealth mode - focus maintained on background app)")
   }
 }
 
@@ -810,6 +810,17 @@ function applySuperadminMode(enabled: boolean): void {
   }
 }
 
+function setWindowFocusable(focusable: boolean): void {
+  if (state.mainWindow && !state.mainWindow.isDestroyed()) {
+    try {
+      state.mainWindow.setFocusable(Boolean(focusable))
+      if (!focusable) {
+        state.mainWindow.blur()
+      }
+    } catch (_) {}
+  }
+}
+
 function focusMainWindow(): void {
   pruneExtraWindows()
   if (!state.mainWindow?.isDestroyed()) {
@@ -821,9 +832,11 @@ function focusMainWindow(): void {
       state.mainWindow.restore()
     }
 
+    try {
+      state.mainWindow.setFocusable(true)
+    } catch (_) {}
     state.mainWindow.show()
     state.mainWindow.focus()
-    state.mainWindow.moveTop()
     syncWindowStealthState(state.mainWindow)
   }
 }
@@ -1006,6 +1019,7 @@ async function initializeApp() {
     initializeIpcHandlers({
       getMainWindow,
       setWindowDimensions,
+      setWindowFocusable,
       getScreenshotQueue,
       getExtraScreenshotQueue,
       deleteScreenshot,
@@ -1094,8 +1108,7 @@ if (!gotTheLock) {
       createWindow()
     } else {
       if (state.mainWindow.isMinimized()) state.mainWindow.restore()
-      state.mainWindow.show()
-      state.mainWindow.focus()
+      state.mainWindow.showInactive()
       state.mainWindow.moveTop()
     }
   })
